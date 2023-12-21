@@ -32,11 +32,11 @@ const ClassRoomForm = () => {
       <Col xs={8}>
         <h2 className="mb-5">Create your classroom</h2>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicBreed">
+          <Form.Group className="mb-3" controlId="formBasicNumber">
             <Form.Label>Number</Form.Label>
             <Form.Control
               maxLength={3}
-              placeholder="Enter room number eg: 101"
+              placeholder="Enter number eg: 101"
               value={classRoom.number}
               onChange={(e) =>
                 setClassroom({ ...classRoom, number: e.target.value })
@@ -47,7 +47,7 @@ const ClassRoomForm = () => {
               Please provide the room number.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Group controlId="formSubject" className="mb-3">
             <Form.Label>Subject</Form.Label>
             <Form.Control
               maxLength={10}
@@ -62,10 +62,10 @@ const ClassRoomForm = () => {
               Please provide the teaching subject.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formDescription">
+          <Form.Group className="mb-3" controlId="formCapacity">
             <Form.Label>Capacity</Form.Label>
             <Form.Control
-              maxLength={90}
+              maxLength={3}
               rows={3}
               placeholder="Enter capacity eg: 25"
               value={classRoom.capacity}

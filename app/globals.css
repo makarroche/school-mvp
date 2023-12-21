@@ -43,3 +43,7 @@ a:hover {
 .form-margin-top {
   margin-top: 10% !important;
 }
+
+.form-margin-bottom {
+  margin-bottom: 10% !important;
+}
