@@ -12,7 +12,7 @@ const Header = () => {
       <Container>
         <Navbar.Brand href="#home" className="text-white">ClassroomsMVP<img
             className="ms-2"
-            src="favicon.ico"
+            src="bezier.svg"
             alt="Bootstrap"
             width="20"
             height="20"
