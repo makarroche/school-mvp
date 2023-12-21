@@ -20,9 +20,6 @@ a:hover {
   box-sizing: border-box;
 }
 
-#more-features {
-  color:deeppink !important
-}
 
 .fun-footer {
   background-color: #107dac;
@@ -46,4 +43,17 @@ a:hover {
 
 .form-margin-bottom {
   margin-bottom: 10% !important;
+}
+
+.card-bg {
+  background-color: #3a3a3a !important;
+}
+
+#room-display {
+  margin: 5% !important;
+}
+
+#showDetails-bg {
+  background-color: #107dac;
+  border-color: aliceblue;
 }
