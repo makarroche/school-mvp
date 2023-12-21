@@ -35,3 +35,11 @@ a:hover {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+.container-color {
+  background-color: #005073;
+}
+
+.form-margin-top {
+  margin-top: 10% !important;
+}
