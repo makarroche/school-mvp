@@ -1,8 +1,9 @@
 import { Row } from "react-bootstrap";
 
-const ClassRoomDetails = () => {
+const ClassRoomDetails = ({classrooms}) => {
+
   return (
-    <Row className="text-center">
+    classrooms && <Row className="text-center">
       <h3 className="text-white">Classroom Details</h3>
     </Row>
   );

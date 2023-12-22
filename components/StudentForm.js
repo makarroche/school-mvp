@@ -1,18 +1,19 @@
 "use client";
 
+import { itemAlreadyExists } from "@/utils/functions";
 import { useState } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 
-const StudentForm = () => {
+const StudentForm = ({ students, setStudents, classrooms }) => {
   const [validated, setValidated] = useState(false);
   const [student, setStudent] = useState({
     name: "",
     number: "",
     classroom: "",
-    gender: "",
-    email: "",
+    gender: "female",
   });
-  const [showSuccessMessage, setShowSuccessMessage] = useState();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -22,11 +23,33 @@ const StudentForm = () => {
     }
 
     setValidated(true);
-    setShowSuccessMessage(true);
+    debugger
+    if (
+      student?.name &&
+      student?.number &&
+      student?.classroom &&
+      student?.gender &&
+      student?.age
+    )
+      populateStudents();
   };
 
-  //Check if student already exists
-  const studentAlreadyExists = () => {};
+  const populateStudents = () => {
+    if (itemAlreadyExists(student)) {
+      setError(true);
+    } else {
+      setShowSuccessMessage(true);
+      setStudents([
+        ...students,
+        {
+          name: student?.number,
+          number: student?.subject,
+          classroom: student?.capacity,
+          email: student?.email,
+        },
+      ]);
+    }
+  };
 
   return (
     <Row className="text-white justify-content-center mt-5 form-margin-bottom">
@@ -36,9 +59,9 @@ const StudentForm = () => {
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              maxLength={3}
+              maxLength={20}
               placeholder="Enter name"
-              value={student.number}
+              value={student?.name}
               onChange={(e) => setStudent({ ...student, name: e.target.value })}
               required
             />
@@ -49,11 +72,11 @@ const StudentForm = () => {
           <Form.Group controlId="formBasicStudentNumber" className="mb-3">
             <Form.Label>Student Number</Form.Label>
             <Form.Control
-              maxLength={10}
+              maxLength={3}
               placeholder="Enter number "
-              value={student.subject}
+              value={student?.number}
               onChange={(e) =>
-                setstudent({ ...student, subject: e.target.value })
+                setStudent({ ...student, number: e.target.value })
               }
               required
             />
@@ -63,12 +86,26 @@ const StudentForm = () => {
           </Form.Group>
           <Form.Group controlId="formBasicRoom" className="mb-3">
             <Form.Label>Student Classroom</Form.Label>
-            <Form.Select aria-label="Default select example">
-              <option>Select classroom</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </Form.Select>
+            <Form.Control
+              as="select"
+              onChange={(e) =>
+                setStudent({ ...student, classroom: e.currentTarget.value })
+              }
+              disabled={classrooms.length > 0 ? false : true}
+            >
+              <option>
+                {classrooms.length > 0
+                  ? "Select classroom"
+                  : "Please create classrooms"}
+              </option>
+              {classrooms.map((item) => {
+                return (
+                  <option value="1" key={item?.number}>
+                    {item?.number}
+                  </option>
+                );
+              })}
+            </Form.Control>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicAge">
             <Form.Label>Age</Form.Label>
@@ -76,48 +113,32 @@ const StudentForm = () => {
               maxLength={3}
               rows={3}
               placeholder="Enter student's age"
-              value={student.age}
-              onChange={(e) => setstudent({ ...student, age: e.target.value })}
+              value={student?.age}
+              onChange={(e) => setStudent({ ...student, age: e.target.value })}
               required
             />
             <Form.Control.Feedback type="invalid">
               Please provide the student's age.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicGender">
+          <Form.Group controlId="formBasicGender" className="mb-3">
             <Form.Label>Gender</Form.Label>
-            <div key={`default-checkbox`} className="mb-3">
-              <Form.Check
-                type={"checkbox"}
-                label={`Female`}
-                onChange={(e) =>
-                  setstudent({ ...student, gender: e.target.value })
-                }
-              />
-              <Form.Check
-                type={"checkbox"}
-                label={`Male`}
-                onChange={(e) =>
-                  setstudent({ ...student, gender: e.target.value })
-                }
-              />
-            </div>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email</Form.Label>
             <Form.Control
-              maxLength={20}
-              rows={3}
-              placeholder="Enter student's email"
-              value={student.email}
+              as="select"
               onChange={(e) =>
-                setstudent({ ...student, email: e.target.value })
+                setStudent({ ...student, gender: e.currentTarget.value })
               }
-              required
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide the student's email.
-            </Form.Control.Feedback>
+            >
+              <option value="Female">
+                Female
+              </option>
+              <option value="Male">
+                Male
+              </option>
+              <option value="Other">
+               Other
+              </option>
+            </Form.Control>
           </Form.Group>
           <Button className="bg-dark border" onClick={handleSubmit} size="lg">
             Create
@@ -125,6 +146,11 @@ const StudentForm = () => {
           {showSuccessMessage && (
             <Alert variant="success mt-4 w-50">
               Student created succesfully!
+            </Alert>
+          )}
+          {error && (
+            <Alert variant="danger mt-4 w-50">
+              This student already exists
             </Alert>
           )}
         </Form>

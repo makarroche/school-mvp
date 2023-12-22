@@ -1,16 +1,14 @@
 "use client";
 
+import { itemAlreadyExists } from "@/utils/functions";
 import { useState } from "react";
 import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 
-const ClassRoomForm = () => {
+const ClassRoomForm = ({ classrooms, setClassrooms }) => {
   const [validated, setValidated] = useState(false);
-  const [classRoom, setClassroom] = useState({
-    number: "",
-    subject: "",
-    capacity: "",
-  });
-  const [showSuccessMessage, setShowSuccessMessage] = useState();
+  const [classroom, setClassroom] = useState({number: '', subject: '',capacity: ''});
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -18,14 +16,27 @@ const ClassRoomForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
-    setShowSuccessMessage(true);
+    if (classroom?.number && classroom?.subject && classroom?.capacity)
+      populateClassrooms();
   };
 
-  //Check if classroom number already exists
-  const classroomAlreadyExists = () => {
-  }
+  const populateClassrooms = () => {
+    if (itemAlreadyExists(classroom)) {
+      setError(true);
+    } else {
+      setShowSuccessMessage(true);
+      setClassrooms( [
+              ...classrooms,
+              {
+                number: classroom.number,
+                subject: classroom.subject,
+                capacity: classroom.capacity,
+              },
+            ]
+      );
+    }
+  };
 
   return (
     <Row className="text-white justify-content-center mt-5">
@@ -37,9 +48,11 @@ const ClassRoomForm = () => {
             <Form.Control
               maxLength={3}
               placeholder="Enter number eg: 101"
-              value={classRoom.number}
+              value={classroom?.number}
               onChange={(e) =>
-                setClassroom({ ...classRoom, number: e.target.value })
+                setClassroom({ ...classroom, number: e.target.value },
+                setShowSuccessMessage(false),
+                setError(false))
               }
               required
             />
@@ -52,9 +65,9 @@ const ClassRoomForm = () => {
             <Form.Control
               maxLength={10}
               placeholder="Enter subject eg: Science"
-              value={classRoom.subject}
+              value={classroom?.subject}
               onChange={(e) =>
-                setClassroom({ ...classRoom, subject: e.target.value })
+                setClassroom({ ...classroom, subject: e.target.value })
               }
               required
             />
@@ -68,9 +81,9 @@ const ClassRoomForm = () => {
               maxLength={3}
               rows={3}
               placeholder="Enter capacity eg: 25"
-              value={classRoom.capacity}
+              value={classroom?.capacity}
               onChange={(e) =>
-                setClassroom({ ...classRoom, capacity: e.target.value })
+                setClassroom({ ...classroom, capacity: e.target.value })
               }
               required
             />
@@ -84,6 +97,11 @@ const ClassRoomForm = () => {
           {showSuccessMessage && (
             <Alert variant="success mt-4 w-50">
               Classroom created succesfully!
+            </Alert>
+          )}
+          {error && (
+            <Alert variant="danger mt-4 w-50">
+              This classroom already exists
             </Alert>
           )}
         </Form>
