@@ -91,7 +91,7 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
               required
             />
             <Form.Control.Feedback type="invalid">
-              Please provide the student's name.
+              Please provide the students name.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formBasicStudentNumber" className="mb-3">
@@ -105,7 +105,7 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
               required
             />
             <Form.Control.Feedback type="invalid">
-              Please provide the student's number.
+              Please provide the students number.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formBasicRoom" className="mb-3">
@@ -148,7 +148,7 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
               required
             />
             <Form.Control.Feedback type="invalid">
-              Please provide the student's age.
+              Please provide the students age.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="formBasicGender" className="mb-3">

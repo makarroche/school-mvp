@@ -34,13 +34,13 @@ const ClassRoomDetails = ({ classroomDetails, students }) => {
           <h3 className="text-white mt-2 mb-4">Classroom Details</h3>
           <ListGroup className="">
             <ListGroup.Item className="bg-dark text-white">
-              Classroom's Number: {classroomDetails.number}
+              Classrooms Number: {classroomDetails.number}
             </ListGroup.Item>
             <ListGroup.Item className="bg-dark text-white">
-              Classroom's Subject: {classroomDetails.subject}
+              Classrooms Subject: {classroomDetails.subject}
             </ListGroup.Item>
             <ListGroup.Item className="bg-dark text-white">
-              Classroom's Students:
+              Classrooms Students:
               {participants.length > 0 &&
                 participants.map((item) => {
                   return (
