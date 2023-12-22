@@ -22,7 +22,6 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
   };
 
   const populateClassrooms = () => {
-    debugger
     if (itemAlreadyExists(classroom, classrooms)) {
       setError(true);
     } else {
@@ -48,6 +47,7 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
             <Form.Label>Number</Form.Label>
             <Form.Control
               maxLength={3}
+              type="number"
               placeholder="Enter number eg: 101"
               value={classroom?.number}
               onChange={(e) =>
