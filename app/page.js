@@ -6,12 +6,12 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import RoomDisplay from "@/components/RoomDisplay";
 import StudentForm from "@/components/StudentForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 
 export default function Home() {
-  const [classRooms, setClassrooms] = useState();
-  const [students, setStudents] = useState();
+  const [classrooms, setClassrooms] = useState([]);
+  const [students, setStudents] = useState([]);
   const [component, setComponent] = useState();
 
   return (
@@ -21,22 +21,22 @@ export default function Home() {
       </Row>
       {component === "Create room" && (
         <Row className="form-margin-top">
-          <ClassRoomForm></ClassRoomForm>
+          <ClassRoomForm classrooms={classrooms} setClassrooms={setClassrooms}></ClassRoomForm>
         </Row>
       )}
       {component === "Create student" && (
         <Row className="form-margin-top">
-          <StudentForm></StudentForm>
+          <StudentForm students={students} setStudents={setStudents} classrooms={classrooms}></StudentForm>
         </Row>
       )}
       {component === "View rooms" && (
         <>
           <Row className="bg-dark rounded" id="room-display">
             <h3 className="text-white mt-4 ms-3">Explore Classrooms</h3>
-            <RoomDisplay></RoomDisplay>
+            <RoomDisplay classrooms={classrooms}></RoomDisplay>
           </Row>
           <Row>
-            <ClassRoomDetails></ClassRoomDetails>
+            <ClassRoomDetails classrooms={classrooms}></ClassRoomDetails>
           </Row>
         </>
       )}
