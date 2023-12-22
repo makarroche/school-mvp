@@ -6,7 +6,11 @@ import { Form, Row, Col, Button, Alert } from "react-bootstrap";
 
 const ClassRoomForm = ({ classrooms, setClassrooms }) => {
   const [validated, setValidated] = useState(false);
-  const [classroom, setClassroom] = useState({number: '', subject: '',capacity: ''});
+  const [classroom, setClassroom] = useState({
+    number: "",
+    subject: "",
+    capacity: "",
+  });
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState(false);
 
@@ -24,18 +28,27 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
   const populateClassrooms = () => {
     if (itemAlreadyExists(classroom, classrooms)) {
       setError(true);
+      setShowSuccessMessage(false);
     } else {
       setShowSuccessMessage(true);
-      setClassrooms( [
-              ...classrooms,
-              {
-                number: classroom.number,
-                subject: classroom.subject,
-                capacity: classroom.capacity,
-              },
-            ]
-      );
+      setError(false);
+      setClassrooms([
+        ...classrooms,
+        {
+          number: classroom.number,
+          subject: classroom.subject,
+          capacity: classroom.capacity,
+        },
+      ]);
     }
+  };
+
+  const handleNumber = (e) => {
+    setClassroom(
+      { ...classroom, number: e.target.value },
+      setShowSuccessMessage(false),
+      setError(false)
+    );
   };
 
   return (
@@ -48,13 +61,9 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
             <Form.Control
               maxLength={3}
               type="number"
-              placeholder="Enter number eg: 101"
+              placeholder="Enter number"
               value={classroom?.number}
-              onChange={(e) =>
-                setClassroom({ ...classroom, number: e.target.value},
-                setShowSuccessMessage(false),
-                setError(false))
-              }
+              onChange={(e) => handleNumber(e)}
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -65,7 +74,7 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
             <Form.Label>Subject</Form.Label>
             <Form.Control
               maxLength={10}
-              placeholder="Enter subject eg: Science"
+              placeholder="Enter subject"
               value={classroom?.subject}
               onChange={(e) =>
                 setClassroom({ ...classroom, subject: e.target.value })
@@ -80,8 +89,9 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
             <Form.Label>Capacity</Form.Label>
             <Form.Control
               maxLength={3}
+              type="number"
               rows={3}
-              placeholder="Enter capacity eg: 25"
+              placeholder="Enter capacity"
               value={classroom?.capacity}
               onChange={(e) =>
                 setClassroom({ ...classroom, capacity: e.target.value })

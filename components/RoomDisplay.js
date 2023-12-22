@@ -7,11 +7,14 @@ const RoomDisplay = ({ classrooms, setClassroomDetails }) => {
   return (
     <Container className="justify-content-center">
       <Row>
-        {classrooms.length>0 ? (
+        {classrooms.length > 0 ? (
           classrooms?.map((item) => {
             return (
               <Col key={item?.number}>
-                <RoomCard classroom={item} setClassroomDetails={setClassroomDetails}></RoomCard>
+                <RoomCard
+                  classroom={item}
+                  setClassroomDetails={setClassroomDetails}
+                ></RoomCard>
               </Col>
             );
           })

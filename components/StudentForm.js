@@ -10,10 +10,12 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
     name: "",
     number: "",
     classroom: "",
+    age: "",
     gender: "female",
   });
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [error, setError] = useState(false);
+  const [capacityWarning, setCapacityWarning] = useState(false);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -33,11 +35,22 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
       populateStudents();
   };
 
+  const handleNumber = (e) => {
+    setStudent(
+      { ...student, number: e.target.value },
+      setShowSuccessMessage(false),
+      setError(false)
+    );
+  };
+
   const populateStudents = () => {
     if (itemAlreadyExists(student, students)) {
       setError(true);
+      setShowSuccessMessage(false);
     } else {
       setShowSuccessMessage(true);
+      setError(false);
+      checkCapacity();
       setStudents([
         ...students,
         {
@@ -45,10 +58,22 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
           number: student?.number,
           classroom: student?.classroom,
           age: student?.age,
-          age: student?.gender,
+          gender: student?.gender,
         },
       ]);
     }
+  };
+
+  const checkCapacity = () => {
+    const participants = students.filter(
+      (stu) => stu.classroom === student.classroom
+    );
+    const classSelected = classrooms.filter(
+      (item) => item.number === student.classroom
+    );
+
+    if (participants.length >= classSelected[0].capacity)
+      setCapacityWarning(true);
   };
 
   return (
@@ -62,11 +87,7 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
               maxLength={20}
               placeholder="Enter name"
               value={student?.name}
-              onChange={(e) => 
-              setStudent({ ...student, name: e.target.value},
-              setShowSuccessMessage(false),
-              setError(false))
-              }
+              onChange={(e) => setStudent({ ...student, name: e.target.value })}
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -77,11 +98,10 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
             <Form.Label>Student Number</Form.Label>
             <Form.Control
               maxLength={3}
+              type="number"
               placeholder="Enter number "
               value={student?.number}
-              onChange={(e) =>
-                setStudent({ ...student, number: e.target.value })
-              }
+              onChange={(e) => handleNumber(e)}
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -110,11 +130,17 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
                 );
               })}
             </Form.Control>
+            {capacityWarning && (
+              <p className="text-warning">
+                Capacity for class has been reached
+              </p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicAge">
             <Form.Label>Age</Form.Label>
             <Form.Control
               maxLength={3}
+              type="number"
               rows={3}
               placeholder="Enter student's age"
               value={student?.age}
@@ -133,15 +159,9 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
                 setStudent({ ...student, gender: e.currentTarget.value })
               }
             >
-              <option value="Female">
-                Female
-              </option>
-              <option value="Male">
-                Male
-              </option>
-              <option value="Other">
-               Other
-              </option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Other">Other</option>
             </Form.Control>
           </Form.Group>
           <Button className="bg-dark border" onClick={handleSubmit} size="lg">
