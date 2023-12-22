@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
-import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 
-const Header = ({setComponent}) => {
-
+const Header = ({ setComponent }) => {
   const handleOnClick = (buttonClicked) => {
-    setComponent(buttonClicked);  
-  }
+    setComponent(buttonClicked);
+  };
 
   return (
     <Navbar expand className="bg-dark">
@@ -26,11 +24,27 @@ const Header = ({setComponent}) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#room" className="text-white" onClick={() => handleOnClick('Create room')}>
+            <Nav.Link
+              href="#room"
+              className="text-white"
+              onClick={() => handleOnClick("Create room")}
+            >
               Create room
             </Nav.Link>
-            <Nav.Link href="#student" className="text-white" onClick={() => handleOnClick('Create student')}>Create student</Nav.Link>
-            <Nav.Link href="#view" className="text-white" onClick={() => handleOnClick('View rooms')}>View rooms</Nav.Link>
+            <Nav.Link
+              href="#student"
+              className="text-white"
+              onClick={() => handleOnClick("Create student")}
+            >
+              Create student
+            </Nav.Link>
+            <Nav.Link
+              href="#view"
+              className="text-white"
+              onClick={() => handleOnClick("View rooms")}
+            >
+              View rooms
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
