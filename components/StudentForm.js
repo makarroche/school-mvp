@@ -23,7 +23,6 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
     }
 
     setValidated(true);
-    debugger
     if (
       student?.name &&
       student?.number &&
@@ -35,12 +34,10 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
   };
 
   const populateStudents = () => {
-    debugger
     if (itemAlreadyExists(student, students)) {
       setError(true);
     } else {
       setShowSuccessMessage(true);
-      debugger
       setStudents([
         ...students,
         {
