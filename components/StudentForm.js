@@ -35,17 +35,20 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
   };
 
   const populateStudents = () => {
-    if (itemAlreadyExists(student)) {
+    debugger
+    if (itemAlreadyExists(student, students)) {
       setError(true);
     } else {
       setShowSuccessMessage(true);
+      debugger
       setStudents([
         ...students,
         {
-          name: student?.number,
-          number: student?.subject,
-          classroom: student?.capacity,
-          email: student?.email,
+          name: student?.name,
+          number: student?.number,
+          classroom: student?.classroom,
+          age: student?.age,
+          age: student?.gender,
         },
       ]);
     }
@@ -62,7 +65,11 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
               maxLength={20}
               placeholder="Enter name"
               value={student?.name}
-              onChange={(e) => setStudent({ ...student, name: e.target.value })}
+              onChange={(e) => 
+              setStudent({ ...student, name: e.target.value},
+              setShowSuccessMessage(false),
+              setError(false))
+              }
               required
             />
             <Form.Control.Feedback type="invalid">
@@ -100,7 +107,7 @@ const StudentForm = ({ students, setStudents, classrooms }) => {
               </option>
               {classrooms.map((item) => {
                 return (
-                  <option value="1" key={item?.number}>
+                  <option value={item?.number} key={item?.number}>
                     {item?.number}
                   </option>
                 );

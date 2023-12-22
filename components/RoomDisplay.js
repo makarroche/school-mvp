@@ -3,7 +3,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import RoomCard from "./RoomCard";
 
-const RoomDisplay = ({ classrooms }) => {
+const RoomDisplay = ({ classrooms, setClassroomDetails }) => {
   return (
     <Container className="justify-content-center">
       <Row>
@@ -11,7 +11,7 @@ const RoomDisplay = ({ classrooms }) => {
           classrooms?.map((item) => {
             return (
               <Col key={item?.number}>
-                <RoomCard classroom={item}></RoomCard>
+                <RoomCard classroom={item} setClassroomDetails={setClassroomDetails}></RoomCard>
               </Col>
             );
           })

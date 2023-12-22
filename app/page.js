@@ -6,13 +6,14 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import RoomDisplay from "@/components/RoomDisplay";
 import StudentForm from "@/components/StudentForm";
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import { Container, Row } from "react-bootstrap";
 
 export default function Home() {
   const [classrooms, setClassrooms] = useState([]);
   const [students, setStudents] = useState([]);
-  const [component, setComponent] = useState();
+  const [component, setComponent] = useState("Create room");
+  const [classroomDetails, setClassroomDetails] = useState();
 
   return (
     <Container fluid className="container-color">
@@ -33,10 +34,10 @@ export default function Home() {
         <>
           <Row className="bg-dark rounded" id="room-display">
             <h3 className="text-white mt-4 ms-3">Explore Classrooms</h3>
-            <RoomDisplay classrooms={classrooms}></RoomDisplay>
+            <RoomDisplay classrooms={classrooms} setClassroomDetails={setClassroomDetails}></RoomDisplay>
           </Row>
           <Row>
-            <ClassRoomDetails classrooms={classrooms}></ClassRoomDetails>
+            <ClassRoomDetails classroomDetails={classroomDetails} students={students}></ClassRoomDetails>
           </Row>
         </>
       )}

@@ -22,7 +22,8 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
   };
 
   const populateClassrooms = () => {
-    if (itemAlreadyExists(classroom)) {
+    debugger
+    if (itemAlreadyExists(classroom, classrooms)) {
       setError(true);
     } else {
       setShowSuccessMessage(true);
@@ -50,7 +51,7 @@ const ClassRoomForm = ({ classrooms, setClassrooms }) => {
               placeholder="Enter number eg: 101"
               value={classroom?.number}
               onChange={(e) =>
-                setClassroom({ ...classroom, number: e.target.value },
+                setClassroom({ ...classroom, number: e.target.value},
                 setShowSuccessMessage(false),
                 setError(false))
               }
